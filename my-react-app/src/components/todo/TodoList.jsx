@@ -1,6 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { TodoDeleteAlert } from './TodoDeleteAlert'
+import { TodoEditAlert } from './TodoEditAlert'
 
 const TodoList = () => {
+
+    const todoItems=useSelector((state)=>state.todo.value)
   return (
     <div className=' container-fluid m-2'>
         <div className=' row'>
@@ -16,12 +21,22 @@ const TodoList = () => {
                             
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Sample Task</td>
-                            <td><button className='btn btn-warning'>Edit</button></td>
-                            <td><button className='btn btn-danger'>Remove</button></td>
-                        </tr>
+                        
+
+                            {
+                                todoItems.map((item,i)=>{
+                                    return(
+                                        <tr key={i.toString()}>
+                                         <td>{i}</td>
+                            <td>{item}</td>
+                            <td><button onClick={()=>{TodoEditAlert(i,item)}} className='btn btn-warning'>Edit</button></td>
+                            <td><button onClick={()=>{TodoDeleteAlert(i)}} className='btn btn-danger'>Remove</button></td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                           
+                        
                         {/* More tasks can be added here */}
                     </tbody>    
                 </table>
